@@ -1,6 +1,7 @@
 from django.db import models
-
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -20,6 +21,7 @@ class Comment(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    phone_number = PhoneNumberField()
 
 
 class Category(models.Model):
