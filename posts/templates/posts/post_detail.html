@@ -6,6 +6,13 @@
         <li>Author: {{ post.author }}</li>
         <li>Created: {{ post.timestamp|timesince }} ago</li>
     <li>Content: {{ post.content }} </li>
-
+    <li>
+        <ul>
+            {% for comment in post.comments.all %}
+                <li>{{ comment.content }}</li>
+            {% endfor %}
+        </ul>
+    </li>
     </ul>
+<button>leave a comment</button>
 {% endblock %}
