@@ -9,3 +9,11 @@ class Post(models.Model):
     author = models.CharField(max_length=60)
     timestamp = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField()
+
+
+class Comment(models.Model):
+    author = models.CharField(max_length=60)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <ul>
+        <li>Title: {{ post.title }}</li>
+        <li>Author: {{ post.author }}</li>
+        <li>Created: {{ post.timestamp|timesince }} ago</li>
+    <li>Content: {{ post.content }} </li>
+
+    </ul>
+{% endblock %}
