@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'partials/base.html' %}
 {% block content %}
+    <div class="list-group">
 
-    <ul>
     {% for post in posts %}
-        <li>{{ post.title }} id:{{ post.id }}</li>
+        <a href="{% url 'view_post' post.id %}" class="list-group-item list-group-item-action">{{ post.title }} See post</a>
     {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
