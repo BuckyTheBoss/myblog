@@ -23,6 +23,10 @@ class PostCreateView(CreateView):
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
+    def get(self,  request, *args, **kwargs):
+        print(request.user)
+        return super().get(request, *args, **kwargs)
+
 
 class PostUpdateView(UpdateView):
     model = Post
