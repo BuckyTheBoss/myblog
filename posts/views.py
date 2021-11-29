@@ -42,5 +42,5 @@ class CommentCreateView(CreateView):
     # form_class =
     # success_url = reverse_lazy('', kwargs={'pk':})
 
-    def get_success_url(self):
-        return reverse_lazy('view_post', kwargs={'pk': self.object.post.id})
+    # def get_success_url(self):
+    #     return reverse_lazy('view_post', kwargs={'pk': self.object.post.id})

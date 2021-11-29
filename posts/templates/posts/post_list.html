@@ -3,7 +3,7 @@
     <div class="list-group">
 
     {% for post in posts %}
-        <a href="{% url 'view_post' post.id %}" class="list-group-item list-group-item-action">{{ post.title }} See post</a>
+        <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">{{ post.title }} See post</a>
     {% endfor %}
     </div>
 {% endblock %}
