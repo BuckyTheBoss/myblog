@@ -1,0 +1,12 @@
+{% extends "partials/base.html" %}
+{% block content %}
+<div class="container">
+    {% for post in request.user.post_set.all %}
+        <div class="row">
+          {% include 'partials/single_post.html' %}
+<a class="btn btn-warning" href="{% url 'new_comment' post.id %}">Leave a comment</a>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

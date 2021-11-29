@@ -12,4 +12,4 @@ from .models import Post
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['timestamp', 'likes']
+        exclude = ['timestamp', 'likes', 'owner']

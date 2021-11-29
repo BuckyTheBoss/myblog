@@ -1,18 +1,5 @@
 {% extends 'partials/base.html' %}
 {% block content %}
-
-    <ul>
-        <li>Title: {{ post.title }}</li>
-        <li>Author: {{ post.author }}</li>
-        <li>Created: {{ post.timestamp|timesince }} ago</li>
-    <li>Content: {{ post.content }} </li>
-    <li>
-        <ul>
-            {% for comment in post.comments.all %}
-                <li>{{ comment.content }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    </ul>
-<button>Leave a comment</button>
+{% include 'partials/single_post.html' %}
+<a href="{% url 'new_comment' post.id %}">Leave a comment</a>
 {% endblock %}

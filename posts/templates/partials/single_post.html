@@ -1,0 +1,13 @@
+  <ul>
+        <li>Title: {{ post.title }}</li>
+        <li>Author: {{ post.owner.username }}</li>
+        <li>Created: {{ post.timestamp|timesince }} ago</li>
+    <li>Content: {{ post.content }} </li>
+    <li>
+        <ul>
+            {% for comment in post.comments.all %}
+                <li>{{ comment.content }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+    </ul>
