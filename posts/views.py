@@ -35,15 +35,19 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PostModelForm
 
 
-class PostDetailView(DetailView):
-    model = Post
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     # Either
     model = Comment
     fields = ['content', 'phone_number']
-    template_name = 'posts/post_form.html'
+    template_name = 'posts/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['post'] = Post.objects.get(id=self.kwargs['post_id'])
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

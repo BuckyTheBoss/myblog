@@ -18,7 +18,7 @@ class Post(models.Model):
         return f'{self.title} {self.owner} {self.likes}'
 
     def get_absolute_url(self):
-        return reverse('view_post', kwargs={'pk': self.id})
+        return reverse('view_post', kwargs={'post_id': self.id})
 
 class Comment(models.Model):
     content = models.TextField()
@@ -28,7 +28,7 @@ class Comment(models.Model):
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def get_absolute_url(self):
-        return reverse('view_post', kwargs={'pk': self.post.id})
+        return reverse('view_post', kwargs={'post_id': self.post.id})
 
 
 class Category(models.Model):

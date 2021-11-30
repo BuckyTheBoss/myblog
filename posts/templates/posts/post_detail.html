@@ -1,5 +1,9 @@
 {% extends 'partials/base.html' %}
 {% block content %}
-{% include 'partials/single_post.html' %}
-<a href="{% url 'new_comment' post.id %}">Leave a comment</a>
+{% include 'partials/single_post.html'  %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+    <button>Save Comment</button>
+    </form>
 {% endblock %}
