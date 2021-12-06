@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+from django.forms import model_to_dict
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .forms import PostModelForm
@@ -66,3 +67,31 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 def my_posts(request):
     return render(request,'posts/my_posts.html')
+
+
+def post_create(request):
+    form = PostModelForm()
+    if request.method == "POST":
+
+        form = PostModelForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.owner = request.user
+            post.likes = 0
+            post.save()
+            # EITHER THIS
+            response_dict = {
+                'title': post.title,
+                'owner': post.owner.username,
+                'content': post.content,
+            }
+            # OR THIS
+            instance_dict = model_to_dict(post, fields=['title', 'content'])
+            instance_dict['owner'] = post.owner.username
+
+
+            return JsonResponse(response_dict, status=201)
+        else:
+            return JsonResponse(form.errors, safe=False, status=400)
+
+    return render(request, 'posts/post_fetch_form.html', {'form': form, 'posts': Post.objects.all()})

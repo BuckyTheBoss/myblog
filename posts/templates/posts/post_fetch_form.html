@@ -1,0 +1,62 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row" id="posts">
+        {% for post in posts %}
+            <ul>
+                <li>Title: {{ post.title }}</li>
+                <li>Author: {{ post.owner.username }}</li>
+                <li>Created: {{ post.timestamp|timesince }} ago</li>
+                <li>Content: {{ post.content }} </li>
+
+                    <ul>
+                        {% for comment in post.comments.all %}
+                            <li>{{ comment.content }}</li>
+                        {% endfor %}
+                    </ul>
+            </ul>
+        {% endfor %}
+    </div>
+    <form  method='post' id="create_form" enctype="multipart/form-data">
+        <h1 class="h1 ms-auto">Create Post</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="submit" class="btn btn-outline-dark mt-2">
+    </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const postForm = document.querySelector("#create_form");
+        function handleSubmit(postForm) {
+            postForm.addEventListener("submit", e => {
+                e.preventDefault();
+                formData = new FormData(postForm);
+                console.log(formData)
+                fetch('{% url "homepage" %}', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        postForm.reset();
+                        html_to_insert = `<ul>
+                <li>Title: ${ data.title }</li>
+                <li>Author: ${ data.owner }</li>
+                <li>Created: Just now </li>
+                <li>Content: ${ data.content } </li>
+
+            </ul>`;
+                        document.getElementById('posts').insertAdjacentHTML('beforeend', html_to_insert);
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            })
+        }
+
+        handleSubmit(postForm)
+    </script>
+{% endblock %}
